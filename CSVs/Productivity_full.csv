@@ -1,11 +1,37 @@
-Provider Name,Service Role,Patients Seen,Avg Visit Fee,Production,Collection,Adjustments,Year
-"Harvey Seybold, DDS",Dentist,2152,170.51,366940.53,644938.06,68140.36,2022
-Emily Hawkins RDH,Hygienist,728,156.95,114256.95,402.7,62,2022
-Farah Rahman RDH,Hygienist,1325,139.81,185252.2,0,0,2022
-Hyg Hyg,Hygienist,239,139.37,33310.4,7,55,2022
-IC,Dentist,100,1338.51,133851,126709.34,20040.06,2022
-"Jacqueline Hassenplug, DMI",Dentist,2103,197.53,415411.1,353429.4,66030.19,2022
-"Michele Chiafulio-Zasada, RI",Hygienist,83,142.71,11844.6,0,0,2022
-"Peter S. Chang, DDS",Dentist,57,310.11,17676.1,9175.42,8424.32,2022
-Roselle Dental Center,Office Staff,0,0,0,0,0,2022
-Yzabelle Tud,Hygienist,2,0,0,0,0,2022
+Year,Provider Name,Service Role,Patients Seen,Avg Visit Fee,Production,Collection,Adjustments
+2022,"Harvey Seybold, DDS",Dentist,2152,170.51,366940.53,644938.06,68140.36
+2022,"Emily Hawkins, RDH",Hygienist,728,156.95,114256.95,402.7,62
+2022,"Farah Rahman, RDH",Hygienist,1325,139.81,185252.2,0,0
+2022,Hyg Hyg,Hygienist,239,139.37,33310.4,0,0
+2022,IC,Dentist,100,1338.51,133851,126709.34,20040.06
+2022,"Jacqueline Hassenplug, DMI",Dentist,2103,197.53,415411.1,353429.4,66030.19
+2022,"Michele Chiafulio-Zasada, RI",Hygienist,83,142.71,11844.6,0,0
+2022,"Peter S. Chang, DDS",Dentist,57,310.11,17676.1,9175.42,8424.32
+2022,Roselle Dental Center,Office Staff,0,0,0,0,0
+2022,Yzabelle Tud,Hygienist,0,0,0,0,0
+2023,"Harvey Seybold, DDS",Dentist,2239,170.93,382704,641804.85,71620.36
+2023,"Emily Hawkins, RDH",Hygienist,892,148.26,132246.08,0,0
+2023,"Farah Rahman, RDH",Hygienist,1328,137.38,182444.62,0,0
+2023,Hyg Hyg,Hygienist,14,138.39,1937.4,0,0
+2023,IC,Dentist,61,1120.65,68359.81,54340.45,8131.56
+2023,"Jacqueline Hassenplug, DMI",Dentist,2175,202.89,441293.27,390018.06,52822.33
+2023,"Michele Chiafulio-Zasada, RI",Hygienist,186,150.1,27919.2,0,0
+2023,"Peter S. Chang, DDS",Dentist,68,221.37,15053.11,11010.86,3166.44
+2023,Roselle Dental Center,Office Staff,0,0,0,0,0
+2023,Yzabelle Tud,Hygienist,0,0,0,0,0
+2024,"Harvey Seybold, DDS",Dentist,2445,189.38,463036.81,739371.14,120922.03
+2024,"Emily Hawkins, RDH",Hygienist,77,164.42,61985.84,0,0
+2024,"Farah Rahman, RDH",Hygienist,1279,156.54,200217.67,0,0
+2024,Hyg Hyg,Hygienist,111,166.63,18495.48,0,0
+2024,IC,Dentist,0,0,0,2584.7,146.8
+2024,"Jacqueline Hassenplug, DMI",Dentist,1756,230.98,405607.16,339427.19,70565.86
+2024,"Michele Chiafulio-Zasada, RI",Hygienist,212,144.78,30692.65,0,0
+2024,"Peter S. Chang, DDS",Dentist,50,151.42,7571.14,3637.82,4676.2
+2024,Roselle Dental Center,Office Staff,1,0,0,0,0
+2024,Yzabelle Tud,Hygienist,446,178.1,79430.71,0,0
+2025,"Harvey Seybold, DDS",Dentist,1025,196.9,201825.07,279275.78,46806.55
+2025,"Farah Rahman, RDH",Hygienist,467,160.1,74764.93,0,0
+2025,"Jacqueline Hassenplug, DMI",Dentist,416,290.88,121006.05,95654.08,18020.08
+2025,"Michele Chiafulio-Zasada, RI",Hygienist,36,159.16,5729.65,0,0
+2025,"Peter S. Chang, DDS",Dentist,7,343.84,2406.85,1443.85,91.4
+2025,Yzabelle Tud,Hygienist,408,166.28,67843.85,0,0
