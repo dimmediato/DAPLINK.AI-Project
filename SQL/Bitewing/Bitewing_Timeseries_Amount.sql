@@ -1,11 +1,13 @@
 SELECT 
-  CASE 
-    WHEN code IN ('0270N', '00270') THEN '00270'
-    ELSE code
-  END AS code,
+  code,
   year::text AS year,
-  bitewing_type AS films_taken,
-  SUM(amount) AS metric_value
+  SUM(
+    CASE 
+      WHEN {{ MetricDropdown.value }} = 'Amount' THEN amount
+      WHEN {{ MetricDropdown.value }} = 'Frequency' THEN number
+      ELSE amount
+    END
+  ) AS metric_value
 FROM (
   SELECT 
     code,
@@ -19,36 +21,22 @@ FROM (
       WHEN LOWER(service) LIKE '%bitewing%' AND LOWER(service) NOT LIKE '%bitewing [1-4]%' AND LOWER(service) NOT LIKE '%bitewings [1-4]%' THEN 'Bitewings (General)'
       ELSE 'Other'
     END AS bitewing_type,
-    amount
+    amount,
+    number
   FROM procedures_2022_2025_all
   WHERE 
     LOWER(service) LIKE '%bitewing%'
-    AND
-    -- Dynamic film filtering with new dropdown
-    CASE 
-      WHEN {{ BitewingFilmDropdown3.value }} = 'Total' THEN TRUE
-      ELSE 
-        CASE 
-          WHEN LOWER(service) LIKE '%bitewing 1%' OR LOWER(service) LIKE '%bitewings 1%' THEN 'One Film'
-          WHEN LOWER(service) LIKE '%bitewing 2%' OR LOWER(service) LIKE '%bitewings 2%' THEN 'Two Films'
-          WHEN LOWER(service) LIKE '%bitewing 3%' OR LOWER(service) LIKE '%bitewings 3%' THEN 'Three Films'
-          WHEN LOWER(service) LIKE '%bitewing 4%' OR LOWER(service) LIKE '%bitewings 4%' THEN 'Four Films'
-          WHEN LOWER(service) LIKE '%bitewing%' AND LOWER(service) NOT LIKE '%bitewing [1-4]%' AND LOWER(service) NOT LIKE '%bitewings [1-4]%' THEN 'Bitewings (General)'
-          ELSE 'Other'
-        END = {{ BitewingFilmDropdown3.value }}
-    END
+    AND (
+      {{ BitewingFilmDropdown3.value }} = 'Total' OR
+      CASE 
+        WHEN LOWER(service) LIKE '%bitewing 1%' OR LOWER(service) LIKE '%bitewings 1%' THEN 'One Film'
+        WHEN LOWER(service) LIKE '%bitewing 2%' OR LOWER(service) LIKE '%bitewings 2%' THEN 'Two Films'
+        WHEN LOWER(service) LIKE '%bitewing 3%' OR LOWER(service) LIKE '%bitewings 3%' THEN 'Three Films'
+        WHEN LOWER(service) LIKE '%bitewing 4%' OR LOWER(service) LIKE '%bitewings 4%' THEN 'Four Films'
+        WHEN LOWER(service) LIKE '%bitewing%' AND LOWER(service) NOT LIKE '%bitewing [1-4]%' AND LOWER(service) NOT LIKE '%bitewings [1-4]%' THEN 'Bitewings (General)'
+        ELSE 'Other'
+      END = {{ BitewingFilmDropdown3.value }}
+    )
 ) AS subquery
-GROUP BY 
-  CASE 
-    WHEN code IN ('0270N', '00270') THEN '00270'
-    ELSE code
-  END,
-  year, 
-  bitewing_type
-ORDER BY 
-  CASE 
-    WHEN code IN ('0270N', '00270') THEN '00270'
-    ELSE code
-  END,
-  year, 
-  bitewing_type;
+GROUP BY code, year
+ORDER BY code, year;
