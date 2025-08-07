@@ -1,0 +1,58 @@
+{
+  "Clinic": "Demo Dental NYC",
+  "Valuation_Date": "2025-07-22",
+  "Revenue_Trailing12": 1546696,
+  "EBITDA_Trailing12": 545301,
+  "Total_SDE": 460000,
+  "SDE": {
+    "Net_Profit_pre_tax": 350000,
+    "Owner_Salary_minus_Market": 60000,
+    "Owner_Perks": 18000,
+    "Interest": 12000,
+    "Depreciation": 9000,
+    "Amortization": 4000,
+    "Non_Recurring": 7000
+  },
+  "Addback_Justifications": {
+    "Net_Profit_pre_tax": "Base accounting profit before income tax adjustments.",
+    "Owner_Salary_minus_Market": "Portion of DDS salary above fair\u2011market compensation.",
+    "Owner_Perks": "Clinic\u2011paid personal auto, phone, and family health insurance.",
+    "Interest": "Financing cost\u2014assumed refinanced by buyer, thus added back.",
+    "Depreciation": "Non\u2011cash charge; added back to reflect cash flow.",
+    "Amortization": "Non\u2011cash; pertains to prior goodwill amortization.",
+    "Non_Recurring": "One\u2011time legal settlement expense in FY 2024."
+  },
+  "Valuation_Multiples": {
+    "EBITDA_multiple": 4.5,
+    "Revenue_multiple": 0.8
+  },
+  "Debt_Service_Annual": 168008,
+  "Buyer_Tax_Rate": 0.25,
+  "Practice_Overview": {
+    "Location": "Midtown Manhattan, NY",
+    "Patient_Base": "95% Fee\u2011For\u2011Service, 2100 active patients",
+    "Operatories": 6,
+    "Technology": [
+      "Digital X\u2011ray",
+      "Itero Scanner",
+      "CBCT"
+    ]
+  },
+  "SWOT": {
+    "Strengths": [
+      "High FFS revenue",
+      "Prime Manhattan location",
+      "Robust hygiene program"
+    ],
+    "Weaknesses": [
+      "Limited Saturday hours"
+    ],
+    "Opportunities": [
+      "Add implant services",
+      "Expand evening hours"
+    ],
+    "Threats": [
+      "Rising rent costs"
+    ]
+  }
+}
