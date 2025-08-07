@@ -1,7 +1,5 @@
 # DAPLINK.AI-Project
-First Pipeline: JSON input. Second Pipeline: rag (retrieval-augmented generation) need the input of some report, prompt engineering (evaluation system for the LLM to change the prompt). Third pipeline: dashboard (linked to second pipeline)
-
-Other Pipeline: Specific dental questions related to the report. How to classify questions and how to score them. 
+First Pipeline: data input and JSON output. Second Pipeline: rag (retrieval-augmented generation) need the input of some report, prompt engineering. Third pipeline: dashboard (linked to second pipeline)
 
 Core Product Functionality:
 DAPLINK offers an automated valuation tool for dental clinics. The current version is a demo app that visualizes key revenue metrics to provide an overview of a clinic's financial health and estimated value. More valuation-assistance features are planned for future releases.
@@ -21,31 +19,3 @@ Main Project Focus Right Now:
 2. Creating visualizations based on cleaned data using Retool to demonstrate an example of the third pipeline and actionable insights.
 
 3. Creating an OCR script to properly extract standard discretionary earnings from Tax Return documents and Profit and Loss documents, in order to calculate addbacks.
-
-4. Create an LLM pipeline that takes the financial/valuation JSON as input and answers questions about the data and generates relevant visualizations
-
-The LLM:
-
-1. Data Schema - The JSON shows you're working with:
-
-Financial metrics (Revenue, EBITDA, SDE breakdowns)
-Valuation multiples
-Practice details (location, patient base, technology)
-SWOT analysis
-
-
-2. Example Questions to Handle:
-
-"What's the practice's EBITDA margin?"
-"Break down the SDE components"
-"How does the valuation multiple compare to industry standards?"
-"What are the main growth opportunities?"
-"Show me the revenue to valuation relationship"
-
-
-3. Visualization Opportunities:
-
-SDE component breakdown (pie/bar chart)
-Financial metrics comparison
-SWOT matrix visualization
-Valuation multiples comparison
