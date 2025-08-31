@@ -1,51 +1,156 @@
 # DAPLINK.AI-Project
-First Pipeline: JSON input. Second Pipeline: rag (retrieval-augmented generation) need the input of some report, prompt engineering (evaluation system for the LLM to change the prompt). Third pipeline: dashboard (linked to second pipeline)
 
-Other Pipeline: Specific dental questions related to the report. How to classify questions and how to score them. 
+## Project Overview
+DAPLINK aims to become the comprehensive platform for dental practice transactions—combining traditional BI tools, AI-powered analysis, and a broker-free marketplace. The platform will seamlessly integrate pre-built analytics dashboards with intelligent Q&A capabilities, providing users with both structured and exploratory data analysis options.
 
-Core Product Functionality:
-DAPLINK offers an automated valuation tool for dental clinics. The current version is a demo app that visualizes key revenue metrics to provide an overview of a clinic's financial health and estimated value. More valuation-assistance features are planned for future releases.
+## Current Development Focus
+The immediate priority is completing the web platform that will serve as the unified interface for all DAPLINK features, bringing together the Retool dashboards, LLM analysis system, and future marketplace functionality into a single, cohesive user experience.
 
-Target Audience and Problem Solved:
-The tool is designed for dental practice buyers—both investors and current clinic operators—who need a fast, low-cost way to assess a clinic’s value before acquisition. DAPLINK aims to simplify and expedite what is traditionally a slow and expensive valuation process.
+## Core Product Functionality
+DAPLINK offers an automated valuation tool for dental clinics with:
+- **Business Intelligence Dashboards** (Retool) for comprehensive practice analytics
+- **LLM-powered Q&A system** that analyzes real practice data
+- **Interactive visualizations** that provide actionable insights
+- **Web platform** (currently in development) to integrate all components
 
-Current Development Focus:
-Internally, the team is focused on mapping and integrating data from Google Drive into the app’s data format to support the current visualization system and lay the groundwork for future enhancements.
+## Target Audience and Problem Solved
+The tool is designed for:
+- **Dental practice buyers** (investors and operators) who need fast, accurate practice valuations
+- **Practice owners** seeking to understand their practice performance and value
+- **Brokers and consultants** who need data-driven insights for their clients
 
-Long-Term Vision:
-DAPLINK intends to grow into a comprehensive platform for dental practices—combining valuation, operational analytics, and a doctor-exclusive MLS (Multiple Listing Service) for buying and selling practices without the need for brokers.
+DAPLINK simplifies what is traditionally a slow, expensive valuation process by automating data analysis and providing instant insights through both traditional BI tools and AI-powered analysis.
 
-Main Project Focus Right Now:
-1. The immediate priority is cleaning and mapping external data (from Drive) into the app’s existing structure to support better visualizations and more efficient feature development.
+## Current System Architecture
 
-2. Creating visualizations based on cleaned data using Retool to demonstrate an example of the third pipeline and actionable insights.
+### Phase 1: Business Intelligence Foundation (Completed)
+- **Technology Stack**: 
+  - PostgreSQL database for data storage
+  - SQL queries for data transformation and analysis
+  - Retool for interactive dashboard creation
+- **Dashboards Created**:
+  - **Productivity Visualizations**: 
+    - Summary tables (total production, patients seen, average visit fee)
+    - Provider collections and adjustments analysis
+    - Pie charts and line graphs for trend analysis
+  - **Procedures Analytics**:
+    - Frequency and revenue tables
+    - Service-specific analysis (e.g., Bitewing procedures)
+    - Provider distribution pie charts
+    - Bar graphs for procedure revenue
+- **Purpose**: These Retool dashboards served as the visual blueprint for what the LLM system should generate programmatically
 
-3. Creating an OCR script to properly extract standard discretionary earnings from Tax Return documents and Profit and Loss documents, in order to calculate addbacks.
+### Phase 2: LLM-Powered Analysis System (Current Production)
+- **Technology**: OpenRouter API with DeepSeek model
+- **Data Pipeline**:
+  1. **Input Layer**: CSV files (productivity_2022_2025_all, procedures_2022_2025_all) + JSON configuration
+  2. **Processing Layer**: Pandas DataFrames with automatic cleaning and standardization
+  3. **Analysis Layer**: LLM interprets questions and generates insights from actual data
+  4. **Visualization Layer**: Dynamic Plotly charts matching Retool dashboard styles
+- **Capabilities**:
+  - Natural language question processing
+  - Provider-specific analysis
+  - Trend analysis with year-over-year comparisons
+  - Comparative analytics across providers
+  - Intelligent insights and recommendations
 
-4. Create an LLM pipeline that takes the financial/valuation JSON as input and answers questions about the data and generates relevant visualizations
+### Phase 3: Web Platform Integration (Currently in Development)
+- **Frontend Development**: Building the user-facing website where all components will live
+- **Integration Goals**:
+  - Embed Retool dashboards directly into the web platform
+  - Integrate LLM Q&A interface for natural language queries
+  - Unified authentication and data management
+  - Seamless switching between BI dashboards and AI analysis
+- **User Experience**: Single platform where users can both explore pre-built dashboards and ask custom questions
 
-The LLM:
+## Technical Skills Demonstrated
 
-1. Data Schema - The JSON shows you're working with:
+### Database & SQL
+- PostgreSQL database design and management
+- Complex SQL queries including:
+  - CASE WHEN statements for data cleaning
+  - Aggregations and groupings
+  - JOIN operations across multiple tables
+  - Window functions for trend analysis
 
-Financial metrics (Revenue, EBITDA, SDE breakdowns)
-Valuation multiples
-Practice details (location, patient base, technology)
-SWOT analysis
+### Business Intelligence
+- Retool dashboard development
+- Interactive visualization design
+- KPI identification and tracking
+- User experience optimization for data exploration
 
+### AI/ML Integration
+- LLM prompt engineering
+- RAG (Retrieval-Augmented Generation) implementation
+- API integration (OpenRouter)
+- Fallback systems for reliability
 
-2. Example Questions to Handle:
+### Full-Stack Development
+- Python backend (data processing, API integration)
+- Data pipeline architecture
+- Visualization libraries (Plotly, Matplotlib)
+- Web platform development (in progress)
 
-"What's the practice's EBITDA margin?"
-"Break down the SDE components"
-"How does the valuation multiple compare to industry standards?"
-"What are the main growth opportunities?"
-"Show me the revenue to valuation relationship"
+## Key Features
 
+### Completed Features
+✅ **Retool BI Dashboards**
+- Production analysis dashboards with multiple visualization types
+- Procedure analytics with drill-down capabilities
+- Provider performance comparisons
+- Real-time data updates from PostgreSQL
 
-3. Visualization Opportunities:
+✅ **SQL Data Pipeline**
+- ETL processes for CSV data ingestion
+- Data cleaning with regex and CASE statements
+- Optimized queries for dashboard performance
+- Automated data refresh capabilities
 
-SDE component breakdown (pie/bar chart)
-Financial metrics comparison
-SWOT matrix visualization
-Valuation multiples comparison
+✅ **LLM Analysis System**
+- Processes 1000+ procedure records and multi-year productivity data
+- Answers any question about practice data without predetermined responses
+- Generates visualizations matching Retool dashboard styles
+- Provides contextual insights and recommendations
+
+✅ **Smart Visualization Generation**
+- Dynamically creates appropriate charts based on questions
+- Maintains visual consistency with Retool dashboards
+- Professional Plotly visualizations
+
+### In Active Development
+🚧 **Web Platform**
+- User authentication system
+- Dashboard embedding framework
+- LLM chat interface
+- Unified navigation and data management
+- Responsive design for all devices
+
+### Data Architecture
+  ## Data Flow
+- Raw Data → PostgreSQL Database
+- SQL Queries → Cleaned/Aggregated Data
+- Retool → Interactive Dashboards
+- Python Pipeline → LLM Analysis
+- Web Platform → Unified User Interface
+
+## Usage Examples
+***Retool Dashboard Access***
+- Production metrics dashboard with year-over-year comparisons
+- Provider performance rankings
+- Procedure mix analysis
+- Financial KPI tracking
+
+***LLM Query System***
+# Load practice data from multiple sources
+practice_data = DentalPracticeData(
+    json_file_path="demo_clinic.json",
+    productivity_csv="CSVs/productivity_2022_2025_all.csv",
+    procedures_csv="CSVs/procedures_2022_2025_all.csv"
+)
+
+# Ask complex analytical questions
+question = "What is the productivity trend for Harvey Seybold, DDS?"
+result = process_question_with_visualizations(question, practice_data)
+
+# Get AI-powered analysis with visualization
+print(result['answer'])  # Detailed analysis with insights
