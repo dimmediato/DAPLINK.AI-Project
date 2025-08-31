@@ -117,7 +117,7 @@ DAPLINK simplifies what is traditionally a slow, expensive valuation process by 
 - Maintains visual consistency with Retool dashboards
 - Professional Plotly visualizations
 
-### In Active Development
+## In Active Development
 🚧 **Web Platform**
 - User authentication system
 - Dashboard embedding framework
@@ -125,8 +125,9 @@ DAPLINK simplifies what is traditionally a slow, expensive valuation process by 
 - Unified navigation and data management
 - Responsive design for all devices
 
-### Data Architecture
-  ## Data Flow
+## Data Architecture
+  ***Data Flow***
+
 - Raw Data → PostgreSQL Database
 - SQL Queries → Cleaned/Aggregated Data
 - Retool → Interactive Dashboards
@@ -134,23 +135,26 @@ DAPLINK simplifies what is traditionally a slow, expensive valuation process by 
 - Web Platform → Unified User Interface
 
 ## Usage Examples
-***Retool Dashboard Access***
+### Retool Dashboard Access
 - Production metrics dashboard with year-over-year comparisons
 - Provider performance rankings
 - Procedure mix analysis
 - Financial KPI tracking
 
-***LLM Query System***
-# Load practice data from multiple sources
+### LLM Query System
+***Load practice data from multiple sources***
+
 practice_data = DentalPracticeData(
     json_file_path="demo_clinic.json",
     productivity_csv="CSVs/productivity_2022_2025_all.csv",
     procedures_csv="CSVs/procedures_2022_2025_all.csv"
 )
 
-# Ask complex analytical questions
+***Ask complex analytical questions***
+
 question = "What is the productivity trend for Harvey Seybold, DDS?"
 result = process_question_with_visualizations(question, practice_data)
 
-# Get AI-powered analysis with visualization
+***Get AI-powered analysis with visualization***
+
 print(result['answer'])  # Detailed analysis with insights
