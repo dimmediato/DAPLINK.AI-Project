@@ -4,12 +4,17 @@ Lives in RAG/ beside the corpus markdown it reads. Imported by both the developm
 notebook in this folder and the question pipeline one level up, so there is one definition
 of chunking, embedding and search rather than two copies that drift.
 
+Named pipeline_rag rather than rag because the containing folder is RAG: on a
+case-insensitive filesystem, `import rag` from the parent can resolve to the folder as an
+implicit namespace package instead of this file, yielding a module with no search()
+and an AttributeError that points nowhere useful.
+
 Usage, from the notebook in this folder:
-    import rag
+    import pipeline_rag as rag
 
 Usage, from the pipeline one level up:
     import sys; sys.path.insert(0, "RAG")
-    import rag
+    import pipeline_rag as rag
 
 Then:
     for score, chunk in rag.search("why is the automobile add-back 25 percent?"):
@@ -269,6 +274,111 @@ def summary():
     shared = sum(1 for c in chunks if c["client"] is None)
     return (f"corpus {CORPUS_HASH} | {len(chunks)} chunks "
             f"({shared} shared, {len(chunks) - shared} client) | model {EMBED_MODEL}")
+
+
+# --- guardrails ---------------------------------------------------------------------
+#
+# These live here rather than in a notebook because they are coupled to the chunker: the
+# citation pattern matches the id scheme built above, and _label parses the breadcrumbs
+# the chunker writes. Splitting them apart would hide that coupling, not remove it.
+
+# --- guardrails ---------------------------------------------------------------------
+
+CITE = re.compile(r'\[((?:method|roselle)-\d+)\]')
+NUM  = re.compile(r'\$?\d[\d,]*(?:\.\d+)?%?')
+
+# An abstention is the whole reply, not a phrase inside one. Anchoring to the opening and
+# capping the length stops a substantive section containing "not present" from being read
+# as a refusal -- which then flags every figure in it as a leak.
+ABSTAIN = re.compile(
+    r'^\W*(?:not covered by|the sources? (?:do|does) not|'
+    r'i (?:cannot|can\'t|am unable to) answer|no information)', re.I)
+
+_BARE_SMALL = re.compile(r'^\d{1,2}$')
+
+
+def _abstained(body):
+    s = body.strip()
+    return bool(ABSTAIN.match(s)) and len(s) < 300
+
+
+def _numbers(text):
+    """Extract numbers normalized so $9,114.00 / 9114 / 9,114.0 compare equal.
+
+    Bare one- and two-digit integers are skipped: they are list markers, section numbers
+    and paragraph counts far more often than figures, and a check that flags them trains
+    the reader to ignore it. A real figure carries a separator, a decimal, or a symbol.
+    The cost is real -- an invented "7 providers" now passes -- and worth paying.
+    """
+    out = set()
+    for tok in NUM.findall(text):
+        if _BARE_SMALL.match(tok):
+            continue
+        try:
+            out.add(float(tok.replace('$', '').replace(',', '').rstrip('%')))
+        except ValueError:
+            pass
+    return out
+
+# A citation-shaped string that is not a real id: [doc · DR §4], [NOTES], [FIGURES].
+# These come from provenance marks inside the chunk text, reused by the model as though
+# they were sources. CITE never matches them, so without this they pass unnoticed.
+_CITEISH = re.compile(r'\[(?!(?:method|roselle)-\d+\])[^\]]{1,60}\]')
+def check(text, retrieved_ids, question="", extra_context=""):
+    """Compare generated text against the sources it was given.
+
+    extra_context carries figures computed outside the corpus. Without it every
+    correctly-quoted CSV figure reads as unsupported, because it appears in no chunk.
+
+    What this cannot catch: whether retrieval was permitted to return those chunks, and
+    whether a retrieved figure has been superseded. A faithful citation of a stale number
+    passes. That gap is closed in the corpus, not here.
+    """
+    body   = CITE.sub(' ', text)          # strip markers: "[method-06]" would read as 6
+    source = "\n".join(by_id[i]["text"] for i in retrieved_ids) + "\n" + extra_context
+
+    cited     = set(CITE.findall(text))
+    abstained = _abstained(body)
+    bad_cites = cited - set(retrieved_ids)
+    malformed = sorted(set(_CITEISH.findall(text)))
+    # Numbers echoed from the question aren't the model's -- exclude them from both checks.
+    unsupported = _numbers(body) - _numbers(source) - _numbers(question)
+    leaked      = sorted(_numbers(body) - _numbers(question)) if abstained else []
+
+    return {"cited": sorted(cited),
+            "fabricated_citations": sorted(bad_cites),
+            "malformed_citations":  malformed,
+            "unsupported_numbers":  sorted(unsupported),
+            "leaked_in_refusal":    leaked,
+            "uncited":              not cited and not abstained,
+            "abstained":            abstained,
+            "pass": not bad_cites and not malformed and not unsupported and not leaked
+                    and (bool(cited) or abstained)}
+
+
+CORPUS_LABEL = {None: "Method", "roselle": "Roselle"}
+_NUMBERING   = re.compile(r'^\d+(?:\.\d+)*\.?\s*')
+_BARE_YEAR   = re.compile(r'(?:FY)?\d{4}')
+
+
+def _label(c):
+    """Build a source name a reader can act on: corpus + section, never a bare year."""
+    parts = [_NUMBERING.sub('', p).strip() for p in c["heading"].split(">")]
+    parts = [p for p in parts if p]
+    tail  = parts[-1]
+    # "Owner compensation reconciliation > FY2022" tails to "FY2022", which names a year
+    # rather than a source. Pull the parent in when the tail cannot stand alone.
+    if len(parts) > 1 and (_BARE_YEAR.fullmatch(tail) or len(tail) < 14):
+        tail = f"{parts[-2]} — {tail}"
+    return f"{CORPUS_LABEL[c['client']]}: {tail}"
+
+
+def render(text):
+    """Replace [method-06] with a readable source name."""
+    def sub(m):
+        c = by_id.get(m.group(1))
+        return f"[{_label(c)}]" if c else m.group(0)
+    return CITE.sub(sub, text)
 
 
 if __name__ == "__main__":
