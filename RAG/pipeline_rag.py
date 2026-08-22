@@ -294,7 +294,7 @@ ABSTAIN = re.compile(
     r'^\W*(?:not covered by|the sources? (?:do|does) not|'
     r'i (?:cannot|can\'t|am unable to) answer|no information)', re.I)
 
-_BARE_SMALL = re.compile(r'^\d{1,2}$')
+_BARE_SMALL = re.compile(r'^\d{1,2}%?$')
 
 
 def _abstained(body):
