@@ -324,11 +324,15 @@ def _numbers(text):
 # These come from provenance marks inside the chunk text, reused by the model as though
 # they were sources. CITE never matches them, so without this they pass unnoticed.
 _CITEISH = re.compile(r'\[(?!(?:method|roselle)-\d+\])[^\]]{1,60}\]')
-def check(text, retrieved_ids, question="", extra_context=""):
+def check(text, retrieved_ids, question="", extra_context="", requires_citation=True):
     """Compare generated text against the sources it was given.
 
     extra_context carries figures computed outside the corpus. Without it every
     correctly-quoted CSV figure reads as unsupported, because it appears in no chunk.
+
+    requires_citation=False for answers that legitimately rest on supplied figures
+    alone -- a per-provider question the corpus has no rule about. Only the caller knows
+    this; check() sees extra_context on every report section too.
 
     What this cannot catch: whether retrieval was permitted to return those chunks, and
     whether a retrieved figure has been superseded. A faithful citation of a stale number
@@ -350,10 +354,10 @@ def check(text, retrieved_ids, question="", extra_context=""):
             "malformed_citations":  malformed,
             "unsupported_numbers":  sorted(unsupported),
             "leaked_in_refusal":    leaked,
-            "uncited":              not cited and not abstained,
+            "uncited":              not cited and not abstained and requires_citation,
             "abstained":            abstained,
             "pass": not bad_cites and not malformed and not unsupported and not leaked
-                    and (bool(cited) or abstained)}
+                    and (bool(cited) or abstained or not requires_citation)}
 
 
 CORPUS_LABEL = {None: "Method", "roselle": "Roselle"}
